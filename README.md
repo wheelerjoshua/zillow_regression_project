@@ -10,10 +10,10 @@ With an unsteady and increasingly competitive market, it is cheaper to retain cu
 
 ## Initial Questions
 
-- Are customers with fiber more or less likely to churn?
-- Do customers who churn have a higher average monthly spend than those who don't?
-- Are customers with dependents less likely to churn than those who don't?
-- Are seniors less likely to churn?
+- Do houses with higher square footage have a higher calculated tax amount?
+- Do houses with more bathrooms have a higher calculated tax amount?
+- Do houses with more bedrooms have a higher calculated tax amount?
+- Do houses with less bedrooms and higher square footage have a lower tax amount than houses with more bedrooms and a higher square footage?
 
 ## Data Dictionary
 
