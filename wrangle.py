@@ -22,7 +22,7 @@ def new_zillow_data():
     '''
     sql_query = """
                 SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, 
-                taxvaluedollarcnt, yearbuilt, taxamount, fips, transactiondate
+                taxvaluedollarcnt, yearbuilt, taxamount, fips
                 FROM properties_2017
                 JOIN predictions_2017 as p USING(parcelid)
                 WHERE transactiondate < '2018-01-01' AND propertylandusetypeid LIKE '261'
@@ -86,7 +86,7 @@ def prepare(df):
     df.drop(columns = 'taxamount', inplace = True)
     # col_list for outliers
     col_list = ['bedroomcnt', 'bathroomcnt', 'calculatedfinishedsquarefeet', 
-            'taxvaluedollarcnt', 'yearbuilt', 'fips']
+            'taxvaluedollarcnt', 'yearbuilt']
     # run df through remove_outliers function for all columns
     df = remove_outliers(df, 1.5, col_list)
     
@@ -112,19 +112,20 @@ def split_data(df):
 ####### Scale #######
 def scale_zillow(train, validate, test):
     '''
-    Takes train, validate, test datasets as an argument and returns the dataframes with 
+    Takes train, validate, test datasets as an argument and returns the dataframes with bed, bath,
     taxvaluedollarcnt, and calculatedfinishedsquarefeet scaled columns.
     '''
     ## MinMaxScaler
     scaler = sklearn.preprocessing.MinMaxScaler()
 
     # Fit scaler to data
-    scaler.fit(train[['taxvaluedollarcnt', 'calculatedfinishedsquarefeet']])
+    scaler.fit(train[['bedroomcnt','bathroomcnt','taxvaluedollarcnt', 'calculatedfinishedsquarefeet']])
 
     # Execute scaling
-    train[['calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(train[['calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
-    validate[['calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(validate[['calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
-    test[['calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(test[['calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
+    train[['bedroomcnt_scaled','bathroomcnt_scaled','calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(train[['bedroomcnt','bathroomcnt','calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
+    validate[['bedroomcnt_scaled','bathroomcnt_scaled','calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(validate[['bedroomcnt','bathroomcnt','calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
+    test[['bedroomcnt_scaled','bathroomcnt_scaled','calculatedfinishedsquarefeet_scaled', 'taxvaluedollarcnt_scaled']] = scaler.transform(test[['bedroomcnt','bathroomcnt','calculatedfinishedsquarefeet', 'taxvaluedollarcnt']])
+    return train, validate, test
     return train, validate, test
 
 ####### Wrangle #######
