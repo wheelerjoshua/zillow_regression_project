@@ -1,12 +1,11 @@
 # About this Project
-To be updated as progress is achieved.
 
 ## Project Goals
-The goal of this project is to identify drivers of churn for the benefit of creating a solution to reduce the rate of churn among customers. 
+The goal of this project is to assess features of real estate to predict tax value.
 
 
 ## Project Description
-With an unsteady and increasingly competitive market, it is cheaper to retain current customers than to establish new ones. We will observe various details of customer contracts and discover what may be driving them to churn and will use the information to create a model to predict future customer churn and a recommendation in reducing rate of churn.
+With low interest rates and a strong buyer's market, it is increasingly important to identify valuable real estate investment opportunities. We will observe various details of properties within a few counties of California and will use the information to create a model to estimate the tax value and provide a recommendation in improving model predictions.
 
 ## Initial Questions
 
@@ -19,11 +18,23 @@ With an unsteady and increasingly competitive market, it is cheaper to retain cu
 
 | variable      | meaning       |
 | ------------- |:-------------:|
-|df|Dataframe of raw telco data from sql server|
+|lm|Ordinary Least Squares Linear Regression modeling algorithm|
+|lm2|Polynomial Regression modeling algorithm |
+|lars|Lasso + Lars Regression modeling algorithm|
+|df|Dataframe of raw zillow data from sql server|
 |train| training dataset, a major cut from the df|
 |validate| validate dataset, used to prevent overfitting|
 |test| test dataset, to test the top model on unseen data|
 |chi2 | statistical test used to compare churn with various categories|
+|taxvaluedollarcnt| The assessed value of the built structure on the parcel|
+|calculatedfinishedsquarefeet| Calculated total finished living area of the home |
+|bedroomcnt| Number of bedrooms in home |
+|bathroomcnt| Number of bathrooms in home including fractional bathrooms|
+|fips| County codes for property locations|
+| County Codes||
+|6037 | Los Angeles, CA|
+|6059 | Orange, CA|
+|6111 | Ventura, CA|
 
 ## Steps to Reproduce
 What I did to get here?
@@ -55,12 +66,12 @@ Functions to acquire, clean, tidy, prepare, split, and scale the data for use.
 #### Visualizations
 - Matplotlib and Seaborn used to create visualizations
 #### Statistical Tests
-Used .mean() and chi2 test to answer statistical questions
+Used .mean(), t-test, and chi2 test to answer statistical questions
 #### Summary
 Wrap up all of the testing conclusions
 ### Modeling
 #### Select Evaluation Metric
-
+Explained Variance was used as the primary evaluation metric.
 #### Evaluate Baseline
 Create a series based on taxvaluedollarcnt.mean()
 #### Develop 3 Models
