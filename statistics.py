@@ -31,16 +31,16 @@ def t_test_bath_tax(train):
     '''
     # establish alpha
     alpha = 0.5
-    # create variables for 1 and 2 baths and 3 and 4 baths
-    one_two_bath = train[train.bathroomcnt <= 2].taxvaluedollarcnt
-    three_four_bath = train[train.bathroomcnt >= 3 ].taxvaluedollarcnt
+    # create variables for 1 bath and 4 baths
+    one_two_bath = train[train.bathroomcnt < 2].taxvaluedollarcnt
+    three_four_bath = train[train.bathroomcnt > 3 ].taxvaluedollarcnt
     # run test
     t, p = stats.ttest_ind(one_two_bath, three_four_bath, equal_var=False)
      # return result
     if p / 2 > alpha:
-        return  print("There is no statistical evidence that more bathrooms have higher tax values")
+        return  print("There is no statistical evidence that higher bathroom count properties have higher tax values than lower bathroom count properties.")
     elif t < 0:
-        return  print("There is no statistical evidence that more bathrooms have higher tax values")
+        return  print("There is no statistical evidence that higher bathroom count properties have higher tax values than lower bathroom count properties.")
     else:
         return  print("Higher bathroom count properties generally have a higher calculated tax amount.")
 
@@ -51,16 +51,16 @@ def t_test_bed_tax(train):
     '''
     # establish alpha
     alpha = 0.5
-    # create variables for 1 and 2 baths and 3 and 4 baths
+    # create variables for 2 bedrooms and 5 bedrooms
     two_bed = train[train.bedroomcnt == 2].taxvaluedollarcnt
     five_bed = train[train.bedroomcnt == 5].taxvaluedollarcnt
     # run test
     t, p = stats.ttest_ind(two_bed, five_bed, equal_var=False)
      # return result
     if p / 2 > alpha:
-        return  print("There is no statistical evidence that more bedrooms have higher tax values")
+        return  print("There is no statistical evidence that higher bedroom count properties have higher tax values than lower bedroom count properties")
     elif t < 0:
-        return  print("There is no statistical evidence that more bedrooms have higher tax values")
+        return  print("There is no statistical evidence that higher bedroom count properties have higher tax values than lower bedroom count properties")
     else:
         return  print("Higher bedroom count properties generally have a higher calculated tax amount.")
 
@@ -80,10 +80,12 @@ def test_lowbed_highsqf(train):
     plt.figure(figsize=(10,10))
     plt.subplot(1,2,1)
     sns.boxplot(x='bedroomcnt',y='taxvaluedollarcnt',data=temp)
-    plt.title('Less than 4 Bedrooms and More than 2k SqFt')
+    plt.title('Less than 4 Bedrooms and More than 2k SqFt',loc='right')
     plt.subplot(1,2,2)
     sns.boxplot(x='bedroomcnt',y='taxvaluedollarcnt',data=temp2)
-    plt.title('More than 3 bedrooms and Less than 2k SqFt');
+    plt.title('More than 3 bedrooms and Less than 2k SqFt',loc='right')
+    plt.tight_layout()
+
     
     # return means and plot
     return print(f'The mean tax value for properties with less than three bedrooms and more than 2000 square feet is {mean1}, \nThe mean tax value for properties with three or more bedrooms and less than 2000 square feet is {mean2}.'), plt.show()

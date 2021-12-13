@@ -1,5 +1,21 @@
 from matplotlib import pyplot as plt
 import seaborn as sns
+import pandas as pd
+import wrangle
+
+def data_landscape():
+    df = wrangle.get_zillow_data()
+    df = wrangle.prepare(df)
+    fips_count = pd.DataFrame(df.fips.value_counts())
+    fips_count.reset_index(inplace=True)
+    fips_count.rename(columns={'fips':'count','index':'fips'}, inplace=True)
+    plt.figure(figsize=(10,10))
+    sns.barplot(y = 'count', x = 'fips', data=fips_count)
+    plt.xlabel('County')
+    plt.xticks([0,1,2],['Los Angeles, CA','Orange, CA', 'Ventura, CA'])
+    plt.ylabel('Number of Properties')
+    plt.title('Properties by County')
+    return plt.show()
 
 def baseline_viz(y_train, pred_mean):
     '''
