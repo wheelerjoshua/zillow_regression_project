@@ -87,7 +87,7 @@ def test_lowbed_highsqf(train):
     plt.tight_layout()
 
     
-    # return means and plot
+    # return means
     return print(f'The mean tax value for properties with less than three bedrooms and more than 2000 square feet is {mean1}, \nThe mean tax value for properties with three or more bedrooms and less than 2000 square feet is {mean2}.'), plt.show()
 
 def test_year_built(train):
@@ -102,15 +102,15 @@ def test_year_built(train):
     # run chi2 test
     chi2, p, degf, expected = stats.chi2_contingency(observe)
     # create lineplot
-    sns.lineplot(x = 'yearbuilt',y='taxvaluedollarcnt',data=train)
-    plt.title('Tax Value by Year Built')
-    plt.ylabel('tax value')
-    plt.xlabel('year built')
+    # sns.lineplot(x = 'yearbuilt',y='taxvaluedollarcnt',data=train)
+    # plt.title('Tax Value by Year Built')
+    # plt.ylabel('tax value')
+    # plt.xlabel('year built')
     # return result based on p
     if p < alpha:
-        return print("There is a correlation between year built and tax value."), plt.show()
+        return print("There is a correlation between year built and tax value.")
     else:
-        return print("There is no correlation between year built and tax value."), plt.show()
+        return print("There is no correlation between year built and tax value.")
 
 def test_fips(train):
     '''
